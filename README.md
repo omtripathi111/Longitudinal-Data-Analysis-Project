@@ -1,29 +1,33 @@
-# Longitudinal Analysis of Response Trajectories
+# Project: Longitudinal Analysis of Growth Trajectories
 
-## 📌 Project Overview
-This project examines how a response variable evolves over time across different treatment groups. Using a **Repeated Measurements** study design, I analyzed the `ChickWeight` dataset to determine if growth trajectories differ significantly between cohorts while accounting for within-subject correlation.
+## 📌 Objective
+The goal of this project is to analyze the effect of different diets on weight gain over time. This study utilizes a **Repeated Measurements Design**, which requires accounting for the correlation of data points within the same subject.
 
 ---
 
 ## 🛠 Statistical Methodology
-1. **Data Completeness Check:** Verified the number of observations per subject to ensure suitability for ANOVA.
-2. **Exploratory Data Analysis (EDA):** Generated "Spaghetti Plots" to visualize individual subject variability against group means.
-3. **Repeated Measures ANOVA:** Implemented the `aov(Error(Subject/Time))` framework to partition variance between and within subjects.
-4. **Interaction Analysis:** Evaluated the **Group × Time interaction** to identify differing rates of change.
+1. **Data Inspection:** Used the `ChickWeight` dataset (578 observations). Renamed variables for clinical clarity: `weight`, `time`, `subject`, and `diet`.
+2. **Completeness Check:** Performed a frequency analysis of visits per subject. While most subjects had 12 visits, the analysis was designed to be robust against minor imbalances.
+3. **Exploratory Data Analysis (EDA):** Generated **Spaghetti Plots** to visualize individual subject trajectories against group-level mean growth curves.
+4. **Primary Analysis:** Conducted a **Repeated Measures ANOVA** using the `Error(subject/time)` term to correctly partition:
+   - **Between-Subject Variance:** Differences between individual subjects.
+   - **Within-Subject Variance:** Changes over time for the same subject.
 
 ---
 
-## 💡 Key Findings
-* **Time Effect:** There was a highly significant increase in response over time across all groups.
-* **Group Differences:** Statistical evidence suggests that different diets result in varying growth magnitudes.
-* **Interaction:** The significant interaction term indicates that the *rate of growth* is dependent on the treatment group.
-* **Methodological Awareness:** While RM-ANOVA was used for this complete-case analysis, I am aware that **Linear Mixed-Effects Models (LMM)** would be the preferred extension for handling unbalanced or missing clinical data.
+## 💡 Key Results & Interpretation
+Based on the ANOVA output:
+* **Time Effect:** Highly significant ($p < 2e-16$), confirming that weight increases over time as expected.
+* **Diet Effect:** Significant ($p = 0.000482$), indicating that overall weight levels differ across diet groups.
+* **Interaction Effect (Diet × Time):** **Significant ($p = 0.00446$)**. 
+  - **Interpretation:** This is the most critical finding. It confirms that the *rate of growth* (the slope) is significantly different depending on the diet. Not all diets result in the same growth speed.
+
+
 
 ---
 
 ## 🚀 How to Run
-```r
-library(ggplot2)
-library(dplyr)
-# Load and run the script
-source("longitudinal_analysis.R")
+1. Required libraries: `ggplot2`, `dplyr`.
+2. Run the script:
+   ```r
+   source("longitudinal_analysis.R")
